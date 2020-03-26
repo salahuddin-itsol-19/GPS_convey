@@ -1,62 +1,59 @@
-import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, Text, View, Image, Animated, TouchableOpacity, Alert, ScrollView, ImageBackground } from 'react-native';
-import { DrawerNavigatorItems, DrawerItems } from 'react-navigation-drawer';
-import { Images, Metrics } from '../../theme';
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  View,
+  Image,
+  Animated,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+  ImageBackground,
+} from 'react-native';
+import {DrawerNavigatorItems, DrawerItems} from 'react-navigation-drawer';
+import {Images, Metrics} from '../../theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import styles from "./styles";
-import { Actions } from 'react-native-router-flux';
-
+import styles from './styles';
+import {Actions} from 'react-native-router-flux';
 
 export default class Sidebar extends Component {
-
-
   navigateYourPlaces = () => {
-    Actions.Yourplaces()
-  }
+    Actions.Yourplaces();
+  };
   navigateProfile = () => {
-    Actions.Profile()
-  }
+    Actions.Profile();
+  };
   navigateMessage = () => {
-    Actions.Message()
-  }
+    Actions.Message();
+  };
   navigateShare = () => {
-    Actions.LocationSharing()
-  }
+    Actions.LocationSharing();
+  };
   navigatefeedback = () => {
-    Actions.SendFeedback()
-  }
+    Actions.SendFeedback();
+  };
   navigateHelp = () => {
-    Actions.Help()
-  }
+    Actions.Help();
+  };
   navigateHostParty = () => {
-    Actions.HostParty()
-  }
+    Actions.HostParty();
+  };
   onLogout = () => {
-    Actions.Login()
-  }
-  renderBody = () => {
+    Actions.Login();
+  };
 
+  renderBody = () => {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1, backgroundColor: '#66DAFF'}}>
         {this.renderRow(
           'Your Places',
           this.navigateYourPlaces,
           'location',
-          'Yourplaces'
-
+          'Yourplaces',
         )}
-        {this.renderRow(
-          'Profile',
-          this.navigateProfile,
-          'profile',
-          'Profile',
-        )}
-        {this.renderRow(
-          'Messages',
-          this.navigateMessage,
-          'message',
-          'Message',
-        )}
+        {this.renderRow('Profile', this.navigateProfile, 'profile', 'Profile')}
+        {this.renderRow('Messages', this.navigateMessage, 'message', 'Message')}
         {this.renderRow(
           'Location Sharing',
           this.navigateShare,
@@ -69,12 +66,7 @@ export default class Sidebar extends Component {
           'feedback',
           'SendFeedback',
         )}
-        {this.renderRow(
-          'Help',
-          this.navigateHelp,
-          'help',
-          'Help',
-        )}
+        {this.renderRow('Help', this.navigateHelp, 'help', 'Help')}
         {this.renderRow(
           'Host a Party',
           this.navigateHostParty,
@@ -82,27 +74,28 @@ export default class Sidebar extends Component {
           'HostParty',
         )}
 
-        {this.renderRow(
-          'Logout',
-          this.onLogout,
-          'logout',
-          'logout')}
+        {this.renderRow('Logout', this.onLogout, 'logout', 'logout')}
       </View>
     );
   };
   renderRow = (title, onPress, icon, activeScene, rightIcon) => {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
       <TouchableOpacity
         style={[
           styles.listView,
 
           navigation &&
-          navigation.newView === activeScene && {
-            backgroundColor: "black",
+            navigation.newView === activeScene && {
+              backgroundColor: 'black',
+            },
+          title == 'Logout' && {
+            marginBottom: Metrics.ratio(25),
           },
         ]}
-        onPress={onPress}>
+
+        // onPress={onPress}
+      >
         <Image
           resizeMethod="auto"
           resizeMode="contain"
@@ -110,21 +103,18 @@ export default class Sidebar extends Component {
             marginHorizontal: Metrics.ratio(16),
             width: Metrics.ratio(25),
             height: Metrics.ratio(25),
-
-
           }}
           source={Images[icon]}
         />
         <View
           style={{
             justifyContent: 'center',
-
           }}>
           <Text style={[styles.listTitle]}>{title}</Text>
         </View>
         {rightIcon && (
           <Icon
-            style={{ marginLeft: Metrics.screenWidth * 0.3 }}
+            style={{marginLeft: Metrics.screenWidth * 0.3}}
             size={20}
             color="white"
             name={rightIcon}
@@ -136,8 +126,14 @@ export default class Sidebar extends Component {
 
   render() {
     return (
-      <View style={{ height: Metrics.screenHeight * 1 }}>
-        <View style={{ backgroundColor: "#53D0FF", justifyContent: "center", alignItems: "center",elevation:4 }}>
+      <View style={{height: Metrics.screenHeight * 1}}>
+        <View
+          style={{
+            backgroundColor: '#53D0FF',
+            justifyContent: 'center',
+            alignItems: 'center',
+            elevation: 4,
+          }}>
           {/* <ImageBackground
                     source={Images.coverImage}
                     style={{ width: undefined, padding: 16, paddingTop: 48,color:"blue" }}
@@ -145,14 +141,16 @@ export default class Sidebar extends Component {
           <Image source={Images.profileDp} style={styles.profile} />
           <Text style={styles.name}>username</Text>
 
-          <View style={{ marginBottom: Metrics.ratio(30) }} >
+          <View style={{marginBottom: Metrics.ratio(30)}}>
             <Text style={styles.mail}>youremail@mail.co</Text>
             {/* <FontAwesome name='user' size={16} color="rgba(255, 255, 255, 0.8)" /> */}
           </View>
           {/* </ImageBackground> */}
         </View>
         <ScrollView>
-          <View style={styles.container} forceInset={{ top: "always", horizontal: "never" }}>
+          <View
+            style={styles.container}
+            forceInset={{top: 'always', horizontal: 'never'}}>
             {/* <DrawerNavigatorItems {...this.props} /> */}
             {/* <DrawerItems {...this.props} /> */}
             {this.renderBody()}

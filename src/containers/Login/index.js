@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -14,12 +14,12 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Zocial from 'react-native-vector-icons/Zocial';
-import { NavigationEvents } from 'react-navigation';
+import {NavigationEvents} from 'react-navigation';
 
 import styles from './styles';
-import { Images, Metrics, Fonts, Colors } from '../../theme';
+import {Images, Metrics, Fonts, Colors} from '../../theme';
 import SpinnerLoader from '../../components/SpinnerLoader';
-import { request as login_user } from '../../redux/actions/Login';
+import {request as login_user} from '../../redux/actions/Login';
 import GoogleSigninBtn from '../../components/GoogleSigninButton';
 import FacebookSigninButton from '../../components/FacebookSigninButton';
 
@@ -29,7 +29,7 @@ class Login extends Component {
     this.state = {
       email: 'testabc123@mailinator.com',
       password: '123456',
-     
+
       isloading: false,
       formErrors: {
         emailError: false,
@@ -46,7 +46,7 @@ class Login extends Component {
         !nextProps.login.isFetching &&
         nextProps.login.data
       ) {
-        this.setState({ isloading: false }, () => {
+        this.setState({isloading: false}, () => {
           this.props.navigation.navigate('Profile');
           //   setTimeout(() => {
           //     Alert.alert(
@@ -65,13 +65,13 @@ class Login extends Component {
           //   }, 500);
         });
       } else if (nextProps.login.failure && !nextProps.login.isFetching) {
-        this.setState({ isloading: false });
+        this.setState({isloading: false});
       }
     }
   }
 
   checkValidation = () => {
-    const { email, password } = this.state;
+    const {email, password} = this.state;
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!email.match(emailRegex)) {
@@ -110,30 +110,24 @@ class Login extends Component {
   };
 
   handleLogin = () => {
-    this.setState({ isloading: true });
-    const { email, password } = this.state;
+    this.setState({isloading: true});
+    const {email, password} = this.state;
     const payload = {
-    
       email,
-      password, 
-    
+      password,
+
       platform: Platform.OS,
       gcm_id: 'string',
-      
-     
-   
-    
     };
-    console.log(payload,"pay")
-  
-   
+    console.log(payload, 'pay');
+
     // this.setState({isLoading: true}, () => {
     this.props.login_user(payload);
     // });
   };
 
-  onChangeEmail = value => this.setState({ email: value });
-  onChangePassword = value => this.setState({ password: value });
+  onChangeEmail = value => this.setState({email: value});
+  onChangePassword = value => this.setState({password: value});
 
   onSubmit = value => {
     if (value === 'onDone') {
@@ -144,7 +138,7 @@ class Login extends Component {
   };
 
   _renderOverlaySpinner = () => {
-    const { isloading } = this.state;
+    const {isloading} = this.state;
     return <SpinnerLoader isloading={isloading} />;
   };
 
@@ -153,16 +147,16 @@ class Login extends Component {
       <View style={styles.logoView}>
         <Image
           source={Images.logo}
-          style={{ width: Metrics.ratio(90), height: Metrics.ratio(90) }}
+          style={{width: Metrics.ratio(90), height: Metrics.ratio(90)}}
         />
       </View>
     );
   };
 
   renderEmailField = () => {
-    const { formErrors } = this.state;
+    const {formErrors} = this.state;
     return (
-      <View style={{ marginBottom: Metrics.ratio(10) }}>
+      <View style={{marginBottom: Metrics.ratio(10)}}>
         <Text style={styles.inputLabel}>Email</Text>
         <TextInput
           ref={o => {
@@ -185,16 +179,16 @@ class Login extends Component {
   };
 
   renderPasswordField = () => {
-    const { showPassword, formErrors } = this.state;
+    const {showPassword, formErrors} = this.state;
     return (
-      <View style={{ marginBottom: Metrics.ratio(10) }}>
+      <View style={{marginBottom: Metrics.ratio(10)}}>
         <Text style={styles.inputLabel}>Password</Text>
         <TextInput
           ref={o => {
             this.inputPassword = o;
           }}
           returnKeyType="done"
-          style={[styles.inputField, { paddingRight: Metrics.ratio(35) }]}
+          style={[styles.inputField, {paddingRight: Metrics.ratio(35)}]}
           placeholder="* * * * * * *"
           secureTextEntry={showPassword ? false : true}
           onChangeText={this.onChangePassword}
@@ -205,7 +199,7 @@ class Login extends Component {
         <TouchableOpacity
           style={[styles.eyeIconView]}
           onPress={() =>
-            this.setState({ showPassword: showPassword ? false : true })
+            this.setState({showPassword: showPassword ? false : true})
           }>
           <FontAwesome
             name={showPassword ? 'eye-slash' : 'eye'}
@@ -237,7 +231,7 @@ class Login extends Component {
       <TouchableOpacity
         style={styles.submitBtn}
         onPress={() => this.checkValidation()}
-      // onPress={() => this.props.navigation.navigate('AwesomePlaces')}
+        // onPress={() => this.props.navigation.navigate('AwesomePlaces')}
       >
         <Text style={styles.submitBtnText}>Login</Text>
       </TouchableOpacity>
@@ -249,12 +243,23 @@ class Login extends Component {
       <Text style={styles.connectText}>or connect with social account</Text>
     );
   };
-  
+
+  onFbLogin = (data, res) => {
+    console.log(data, 'dataaaaaaaaaaaaa');
+    console.log(res, '//////////////');
+    const payload = {};
+    // this.props.socialLogin();
+  };
+
+  onGoogleLogin = data => {
+    console.log(data, 'google res');
+  };
+
   renderSocialBtn = () => {
     return (
-      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-        <FacebookSigninButton  />
-        <GoogleSigninBtn />
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <FacebookSigninButton onFbLogin={this.onFbLogin} />
+        <GoogleSigninBtn onGoogleLogin={this.onGoogleLogin} />
       </View>
     );
   };
@@ -285,7 +290,7 @@ class Login extends Component {
         <Text style={styles.footerText}>Don't have an account yet? </Text>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={[styles.footerText, { color: '#5E8BFF' }]}>Sign Up</Text>
+          <Text style={[styles.footerText, {color: '#5E8BFF'}]}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     );
@@ -293,7 +298,7 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         <ImageBackground
           source={Images.backgroundImage}
           resizeMode="cover"
@@ -308,8 +313,8 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({ login: state.login });
+const mapStateToProps = state => ({login: state.login});
 
-const action = { login_user };
+const action = {login_user};
 
 export default connect(mapStateToProps, action)(Login);
